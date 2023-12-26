@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +114,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setRole(role);
+        user.setUpdated(new Date());
 
         return userMapper.mapToUserDto(userRepository.save(user));
     }

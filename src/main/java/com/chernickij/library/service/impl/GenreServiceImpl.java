@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
@@ -75,6 +76,7 @@ public class GenreServiceImpl implements GenreService {
                 .orElseThrow(() -> new ResourceNotFoundException(format("Genre with id {0} not found ", id)));
 
         genre.setName(genreDto.getName());
+        genre.setUpdated(new Date());
 
         return genreMapper.mapToGenreDto(genreRepository.save(genre));
     }

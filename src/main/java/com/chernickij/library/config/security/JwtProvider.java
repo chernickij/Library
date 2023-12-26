@@ -9,9 +9,9 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    @Value("app.security.secret-key")
+    @Value("${app.security.secret-key}")
     private String secretKey;
-    @Value("app.security.session-time")
+    @Value("${app.security.session-time}")
     private long sessionTime;
 
     public String buildToken(String username) {

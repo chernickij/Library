@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    @Value("app.security.secret-key")
+    @Value("${app.security.secret-key}")
     private String secretKey;
 
     @Autowired

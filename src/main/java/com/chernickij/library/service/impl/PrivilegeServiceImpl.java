@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
@@ -73,6 +74,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
                 .orElseThrow(() -> new ResourceNotFoundException(format("Privilege with id {0} not found ", id)));
 
         privilege.setName(privilegeDto.getName());
+        privilege.setUpdated(new Date());
+
         return privilegeMapper.mapToPrivilegeDto(privilegeRepository.save(privilege));
     }
 

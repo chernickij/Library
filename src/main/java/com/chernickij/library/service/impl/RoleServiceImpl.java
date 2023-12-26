@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
@@ -86,6 +87,7 @@ public class RoleServiceImpl implements RoleService {
 
         role.setName(roleDto.getName());
         role.setPrivileges(roleDto.getPrivileges().stream().map(privilegeMapper::mapToPrivilege).toList());
+        role.setUpdated(new Date());
 
         return roleMapper.mapToRoleDto(roleRepository.save(role));
     }

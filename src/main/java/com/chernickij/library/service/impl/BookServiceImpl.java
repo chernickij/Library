@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +102,7 @@ public class BookServiceImpl implements BookService {
         book.setDescription(bookDto.getDescription());
         book.setAuthor(author);
         book.setGenre(genre);
+        book.setUpdated(new Date());
 
         return bookMapper.mapToBookDto(bookRepository.save(book));
     }

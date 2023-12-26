@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
@@ -74,6 +75,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         author.setFirstName(authorDto.getFirstName());
         author.setLastName(authorDto.getLastName());
+        author.setUpdated(new Date());
 
         return authorMapper.mapToAuthorDto(authorRepository.save(author));
     }
