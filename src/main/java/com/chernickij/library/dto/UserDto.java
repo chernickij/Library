@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class UserDto {
     private long id;
-    private String password;
     private String firstName;
     private String lastName;
     private String email;

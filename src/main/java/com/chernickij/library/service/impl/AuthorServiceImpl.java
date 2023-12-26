@@ -61,6 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         return authorMapper.mapToAuthorDto(authorRepository.save(Author.builder()
                 .firstName(authorDto.getFirstName())
+                .created(new Date())
                 .lastName(authorDto.getLastName())
                 .build()));
     }

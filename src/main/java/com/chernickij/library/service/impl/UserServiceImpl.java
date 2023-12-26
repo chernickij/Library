@@ -68,10 +68,11 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userMapper.mapRegistrationDto(registrationDto);
+        user.setCreated(new Date());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
 
         // TODO: Need to improve basic user role logic
-        long basicUserRoleId = 2;
+        long basicUserRoleId = 3;
         Role role = getRole(basicUserRoleId);
         user.setRole(role);
         return userMapper.mapToUserDto(userRepository.save(user));
@@ -95,6 +96,7 @@ public class UserServiceImpl implements UserService {
                 .email(userDto.getEmail())
                 .phone(userDto.getPhone())
                 .role(role)
+                .created(new Date())
                 .build()));
     }
 

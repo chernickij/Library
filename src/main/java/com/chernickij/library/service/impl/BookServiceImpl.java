@@ -80,6 +80,7 @@ public class BookServiceImpl implements BookService {
         return bookMapper.mapToBookDto(bookRepository.save(Book.builder()
                 .isbn(bookDto.getIsbn())
                 .name(bookDto.getName())
+                .created(new Date())
                 .description(bookDto.getDescription())
                 .author(author)
                 .genre(genre)

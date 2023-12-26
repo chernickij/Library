@@ -1,11 +1,6 @@
 package com.chernickij.library.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,11 +18,11 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "users")
 public class User extends AbstractEntity {
-//    @Id
-//    @SequenceGenerator(name="users_id_seq",sequenceName="users_id_seq", allocationSize=1)
-//    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
-//    @Column(name = "id", nullable = false)
-//    private Long id;
+    @Id
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private long id;
 
     @NotNull
     @Column(name = "password", nullable = false)

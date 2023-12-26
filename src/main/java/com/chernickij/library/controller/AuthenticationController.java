@@ -29,7 +29,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping(value = "/auth")
+    @PostMapping(value = "/login")
     public String login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         log.debug("Executing the login method for user with email: %s".formatted(loginDto.email()));
 

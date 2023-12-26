@@ -42,13 +42,13 @@ public class UserController {
         return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("{/id}")
-    public ResponseEntity<UserDto> update(@PathVariable("id") Long id, @RequestBody SaveUserDto userDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> update(@PathVariable("id") long id, @RequestBody SaveUserDto userDto) {
         return new ResponseEntity<>(userService.update(id, userDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("{/id}")
-    public ResponseEntity<UserDto> delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserDto> delete(@PathVariable("id") long id) {
         userService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

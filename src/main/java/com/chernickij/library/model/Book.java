@@ -1,11 +1,6 @@
 package com.chernickij.library.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,8 +18,14 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "book")
 @EqualsAndHashCode(callSuper = true)
 public class Book extends AbstractEntity {
+    @Id
+    @SequenceGenerator(name = "book_id_seq", sequenceName = "book_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "book_id_seq", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @NotNull
-    @Column(name = "model", unique = true, nullable = false)
+    @Column(name = "isbn", unique = true, nullable = false)
     private String isbn;
 
     @NotNull
@@ -41,6 +42,6 @@ public class Book extends AbstractEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id", nullable = false)
+    @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 }

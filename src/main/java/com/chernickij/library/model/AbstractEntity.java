@@ -19,12 +19,6 @@ import java.util.Date;
 @EqualsAndHashCode
 @MappedSuperclass
 public abstract class AbstractEntity {
-    @Id
-    @NotNull
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-
     @NotNull
     @Column(name = "ts_created", updatable = false, nullable = false)
     private Date created = new Date();

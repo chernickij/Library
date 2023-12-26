@@ -64,6 +64,7 @@ public class GenreServiceImpl implements GenreService {
 
         return genreMapper.mapToGenreDto(genreRepository.save(Genre.builder()
                 .name(genreDto.getName())
+                .created(new Date())
                 .build()));
     }
 

@@ -62,6 +62,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
         return privilegeMapper.mapToPrivilegeDto(privilegeRepository.save(Privilege.builder()
                 .name(privilegeDto.getName())
+                .created(new Date())
                 .build()));
     }
 

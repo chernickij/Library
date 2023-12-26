@@ -70,6 +70,7 @@ public class RoleServiceImpl implements RoleService {
 
         return roleMapper.mapToRoleDto(roleRepository.save(Role.builder()
                 .name(roleDto.getName())
+                .created(new Date())
                 .privileges(roleDto.getPrivileges().stream().map(privilegeMapper::mapToPrivilege).toList())
                 .build()));
     }

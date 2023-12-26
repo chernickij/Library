@@ -1,8 +1,6 @@
 package com.chernickij.library.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,6 +18,12 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "author")
 @EqualsAndHashCode(callSuper = true)
 public class Author extends AbstractEntity {
+    @Id
+    @SequenceGenerator(name = "author_id_seq", sequenceName = "author_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "author_id_seq", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @NotNull
     @Column(name = "first_name", nullable = false)
     private String firstName;

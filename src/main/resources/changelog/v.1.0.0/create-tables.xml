@@ -37,9 +37,8 @@
         <sqlFile encoding="utf8" path="./sql/07.create-book-table.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
-<!--    <include file="./xml/test.xml" relativeToChangelogFile="true"/>-->
-<!--    <changeSet id="test" author="Daniil Chernickij" >-->
-<!--        <xmlFile path="./xml/test.xml" relativeToChangelogFile="false"/>-->
-<!--    </changeSet>-->
+    <changeSet id="insert-initial-data" author="Daniil Chernickij">
+        <sqlFile encoding="utf8" path="./sql/08.insert-initial-data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 
 </databaseChangeLog>
