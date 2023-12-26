@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.3.xsd"
+>
+
+    <changeSet id="test1" author="nat">
+        <preConditions>
+            <not>
+                <tableExists tableName="CCP_USER2"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CCP_USER2">
+            <column name="USER_SK" type="VARCHAR(36)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ID" type="VARCHAR(36)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="test2" author="nat">
+        <preConditions>
+            <not>
+                <tableExists tableName="CCP_CUSTOMER2"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CCP_CUSTOMER2">
+            <column name="CUSTOMER_SK" type="VARCHAR(36)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ID" type="VARCHAR(36)"/>
+            <column name="USER_FK" type="VARCHAR(36)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="test3" author="nat">
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="CCP_USER_FK"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="CCP_CUSTOMER2" baseColumnNames="USER_FK"
+                                 constraintName="CCP_USER_FK" referencedTableName="CCP_USER2"
+                                 referencedColumnNames="USER_SK"/>
+    </changeSet>
+
+    <changeSet id="test4" author="nat">
+        <sql>
+            INSERT INTO CCP_USER2(user_sk, id) VALUES ('user_sk_1', 'user_id_1');
+            INSERT INTO CCP_USER2(user_sk, id) VALUES ('user_sk_2', 'user_id_2');
+            INSERT INTO CCP_USER2(user_sk, id) VALUES ('user_sk_3', 'user_id_3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test5" author="nat">
+        <sql>
+            INSERT INTO CCP_CUSTOMER2(customer_sk, id, user_fk) VALUES ('customer_sk_1', 'customer_id_1', 'user_sk_1');
+            INSERT INTO CCP_CUSTOMER2(customer_sk, id, user_fk) VALUES ('customer_sk_2', 'customer_id_2', 'user_sk_2');
+            INSERT INTO CCP_CUSTOMER2(customer_sk, id, user_fk) VALUES ('customer_sk_3', 'customer_id_3', 'user_sk_3');
+            INSERT INTO CCP_CUSTOMER2(customer_sk, id, user_fk) VALUES ('customer_sk_4', 'customer_id_4', null);
+            INSERT INTO CCP_CUSTOMER2(customer_sk, id, user_fk) VALUES ('customer_sk_5', 'customer_id_5', null);
+        </sql>
+    </changeSet>
+
+    <changeSet author="natallia.smoliak@ext.conrad.com" id="USER-64453-01">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="CCP_CUSTOMER2" columnName="CUSTOMER_ID"/>
+            </not>
+        </preConditions>
+        <comment>Add column CCP_CUSTOMER2#CUSTOMER_ID</comment>
+        <addColumn tableName="CCP_CUSTOMER2">
+            <column name="CUSTOMER_ID" type="VARCHAR(36)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="natallia.smoliak@ext.conrad.com" id="USER-64453-02">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="CCP_CUSTOMER2" columnName="CUSTOMER_ID"/>
+        </preConditions>
+        <comment>Copy value to CCP_CUSTOMER2#CUSTOMER_ID from CCP_USER2#ID</comment>
+        <update tableName="CCP_CUSTOMER2">
+            <column name="CUSTOMER_ID" valueComputed="CCP_USER2.ID FROM CCP_USER2"/>
+            <where>CCP_USER2.USER_SK = CCP_CUSTOMER2.USER_FK</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="natallia.smoliak@ext.conrad.com" id="USER-64453-03">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="IDX_UNIQ_CCP_CUSTOMER_CUSTOMER_ID"/>
+            </not>
+        </preConditions>
+        <comment>Add unique index for CCP_CUSTOMER2#CUSTOMER_ID</comment>
+        <createIndex indexName="IDX_UNIQ_CCP_CUSTOMER_CUSTOMER_ID" tableName="CCP_CUSTOMER2" unique="true">
+            <column name="CUSTOMER_ID"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
