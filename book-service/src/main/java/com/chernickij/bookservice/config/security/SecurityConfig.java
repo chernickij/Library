@@ -73,6 +73,7 @@ public class SecurityConfig {
                                         .requestMatchers(PUT, "/books/**").hasAuthority("MANAGE_BOOK")
                                         .requestMatchers(DELETE, "/books/**").hasAuthority("MANAGE_BOOK")
                                         .requestMatchers(GET, "/authors/**").hasAuthority("GET_AUTHOR")
+                                        .requestMatchers(POST, "/authors").hasAuthority("MANAGE_AUTHOR")
                                         .requestMatchers(POST, "/authors/**").hasAuthority("MANAGE_AUTHOR")
                                         .requestMatchers(PUT, "/authors/**").hasAuthority("MANAGE_AUTHOR")
                                         .requestMatchers(DELETE, "/authors/**").hasAuthority("MANAGE_AUTHOR")

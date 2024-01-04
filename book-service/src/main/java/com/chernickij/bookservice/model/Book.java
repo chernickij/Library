@@ -25,7 +25,7 @@ public class Book extends AbstractEntity {
     private long id;
 
     @NotNull
-    @Column(name = "isbn", unique = true, nullable = false)
+    @Column(name = "isbn", nullable = false)
     private String isbn;
 
     @NotNull

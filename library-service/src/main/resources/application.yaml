@@ -3,10 +3,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-#        format_sql: 'true'
     hibernate:
       ddl-auto: none
-#    show-sql: 'true'
   liquibase:
     change-log: classpath:changelog/master.xml
     enabled: 'true'
@@ -22,21 +20,13 @@ spring:
     bootstrap-servers: localhost:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      #      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       value-serializer: org.apache.kafka.common.serialization.LongSerializer
 
 message:
   topic:
     name: free-book-info
-
-app:
-  security:
-    secret-key: 472B4B6250655368566D597133743677397A244326452948404D635166546A57
-    session-time: '120000000'
-
-#hibernate:
-#  dialect: org.hibernate.dialect.PostgreSQLDialect
+  group-id: book-info
 
 server:
-  port: '8080'
-
+  port: 8081

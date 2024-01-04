@@ -12,6 +12,7 @@ import com.chernickij.bookservice.repository.GenreRepository;
 import com.chernickij.bookservice.service.BookService;
 import com.chernickij.bookservice.dto.BookDto;
 import com.chernickij.bookservice.mapper.BookMapper;
+import com.chernickij.bookservice.service.LibraryProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,7 @@ public class BookServiceImpl implements BookService {
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
     private final BookMapper bookMapper;
+    private final LibraryProducerService libraryProducerService;
 
     @Override
     public List<BookDto> getAll(Integer offset, Integer limit) {
@@ -76,7 +78,16 @@ public class BookServiceImpl implements BookService {
 
         Author author = getAuthor(bookDto.getAuthor().getId());
         Genre genre = getGenre( bookDto.getGenre().getId());
-
+        Book book = Book.builder()
+                .isbn(bookDto.getIsbn())
+                .name(bookDto.getName())
+                .created(new Date())
+                .description(bookDto.getDescription())
+                .author(author)
+                .genre(genre)
+                .build();
+        bookRepository.save(book);
+        libraryProducerService.sendBookCreationMessage(book.getId());
         return bookMapper.mapToBookDto(bookRepository.save(Book.builder()
                 .isbn(bookDto.getIsbn())
                 .name(bookDto.getName())
